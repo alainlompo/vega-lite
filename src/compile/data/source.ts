@@ -1,4 +1,4 @@
-import {DataFormat, SOURCE, isInlineData, isUrlData} from '../../data';
+import {DataFormat, SOURCE, isInlineData, isUrlData, isInternalData} from '../../data';
 import {contains, extend} from '../../util';
 import {VgData} from '../../vega.schema';
 
@@ -20,8 +20,8 @@ export namespace source {
     if (data) {
       // If data is explicitly provided
 
-      let sourceData: VgData = {name: model.dataName(SOURCE)};
-      if (isInlineData(data)) {
+      let sourceData: VgData = { name: model.dataName(SOURCE) };
+      if (!isInternalData(data) && isInlineData(data)) {
         sourceData.values = data.values;
         sourceData.format = {type: 'json'};
       } else if (isUrlData(data)) {
