@@ -19,7 +19,6 @@ export namespace source {
 
     if (data) {
       // If data is explicitly provided
-
       let sourceData: VgData = { name: model.dataName(SOURCE) };
       if (!isInternalData(data) && isInlineData(data)) {
         sourceData.values = data.values;
