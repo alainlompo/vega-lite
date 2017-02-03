@@ -262,8 +262,12 @@ export abstract class Model {
 
   public abstract children(): Model[];
 
-  public name(text: string, delimiter: string = '_') {
-    return (this._name ? this._name + delimiter : '') + text;
+  public name(text?: string, delimiter: string = '_') {
+    if (text) {
+      return (this._name ? this._name + delimiter : '') + text;
+    } else {
+      return this._name;
+    }
   }
 
   public description() {
