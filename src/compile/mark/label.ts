@@ -32,6 +32,8 @@ export const label: MarkCompiler = {
       { value: config.text.fontSize }
     );
 
+    const referenceMark = model.parent().children().filter((sibling) => sibling.name() == model.data().ref)[0]
+
     e.text = textRef(textDef, config);
 
     /* Labeling properties */
