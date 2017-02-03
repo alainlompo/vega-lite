@@ -66,7 +66,7 @@ export interface InternalData {
   /**
    * Reference to an internal mark's name (reactive geometry)
    */
-  source: string;
+  ref: string;
 }
 
 export function isUrlData(data: Data): data is UrlData {
@@ -78,7 +78,7 @@ export function isInlineData(data: Data): data is InlineData {
 }
 
 export function isInternalData(data: Data): data is InternalData {
-  return !!data['source'];
+  return !!data['ref'];
 }
 
 export type DataSourceType = 'source' | 'summary' | 'stacked' | 'layout';
