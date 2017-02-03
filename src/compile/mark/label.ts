@@ -10,16 +10,13 @@ import {applyConfig, numberFormat, timeFormatExpression} from '../common';
 import {UnitModel} from '../unit';
 
 import {applyColorAndOpacity} from './common';
-import {TextCompiler} from './base';
-import {text, textRef} from './text';
+import {MarkCompiler} from './base';
+import {textRef} from './text';
 import * as ref from './valueref';
 
-export const label: TextCompiler = {
-  markType: () => {
-    return 'label';
-  },
-
-  background: text.background,
+export const label: MarkCompiler = {
+  vgMark: 'text',
+  role: undefined,
 
   encodeEntry: (model: UnitModel) => {
     let e: VgEncodeEntry = {};
