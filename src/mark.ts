@@ -9,12 +9,13 @@ export namespace Mark {
   export const RECT: 'rect' = 'rect';
   export const RULE: 'rule' = 'rule';
   export const TEXT: 'text' = 'text';
+  export const LABEL: 'label' = 'label';
   export const TICK: 'tick' = 'tick';
   export const CIRCLE: 'circle' = 'circle';
   export const SQUARE: 'square' = 'square';
   export const ERRORBAR: 'error-bar' = 'error-bar';
 }
-export type Mark = typeof Mark.AREA | typeof Mark.BAR | typeof Mark.LINE | typeof Mark.POINT | typeof Mark.TEXT | typeof Mark.TICK | typeof Mark.RECT | typeof Mark.RULE | typeof Mark.CIRCLE | typeof Mark.SQUARE;
+export type Mark = typeof Mark.AREA | typeof Mark.BAR | typeof Mark.LINE | typeof Mark.POINT | typeof Mark.TEXT | typeof Mark.LABEL | typeof Mark.TICK | typeof Mark.RECT | typeof Mark.RULE | typeof Mark.CIRCLE | typeof Mark.SQUARE;
 
 export type CompositeMark = typeof Mark.ERRORBAR;
 
@@ -25,6 +26,7 @@ export const BAR = Mark.BAR;
 export const LINE = Mark.LINE;
 export const POINT = Mark.POINT;
 export const TEXT = Mark.TEXT;
+export const LABEL = Mark.LABEL;
 export const TICK = Mark.TICK;
 export const RECT = Mark.RECT;
 export const RULE = Mark.RULE;
@@ -33,7 +35,7 @@ export const CIRCLE = Mark.CIRCLE;
 export const SQUARE = Mark.SQUARE;
 
 export const ERRORBAR = Mark.ERRORBAR;
-export const PRIMITIVE_MARKS = [AREA, BAR, LINE, POINT, TEXT, TICK, RULE, CIRCLE, SQUARE];
+export const PRIMITIVE_MARKS = [AREA, BAR, LINE, POINT, TEXT, LABEL, TICK, RULE, CIRCLE, SQUARE];
 export const COMPOSITE_MARKS = [ERRORBAR];
 
 export function isCompositeMark(mark: AnyMark): mark is CompositeMark {
@@ -401,6 +403,16 @@ export interface TextConfig extends MarkConfig {
 }
 
 export const defaultTextConfig: TextConfig = {
+  fontSize: 10,
+  minFontSize: 8,
+  maxFontSize: 40,
+  baseline: 'middle',
+  text: 'Abc'
+};
+
+export interface LabelConfig extends TextConfig {}
+
+export const defaultLabelConfig: LabelConfig = {
   fontSize: 10,
   minFontSize: 8,
   maxFontSize: 40,

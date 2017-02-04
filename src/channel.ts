@@ -25,6 +25,8 @@ export namespace Channel {
   export const SHAPE: 'shape' = 'shape';
   export const SIZE: 'size' = 'size';
   export const OPACITY: 'opacity' = 'opacity';
+  export const OFFSET: 'offset' = 'offset';
+  export const ANCHOR: 'anchor' = 'anchor';
 
   // Non-scale channel
   export const TEXT: 'text' = 'text';
@@ -45,20 +47,22 @@ export const SIZE = Channel.SIZE;
 export const COLOR = Channel.COLOR;
 export const TEXT = Channel.TEXT;
 export const DETAIL = Channel.DETAIL;
+export const ANCHOR = Channel.ANCHOR;
+export const OFFSET = Channel.OFFSET;
 export const ORDER = Channel.ORDER;
 export const OPACITY = Channel.OPACITY;
 
 
-export const CHANNELS = [X, Y, X2, Y2, ROW, COLUMN, SIZE, SHAPE, COLOR, ORDER, OPACITY, TEXT, DETAIL];
+export const CHANNELS = [X, Y, X2, Y2, ROW, COLUMN, SIZE, SHAPE, COLOR, ORDER, OPACITY, TEXT, DETAIL, ANCHOR, OFFSET];
 
 // CHANNELS without COLUMN, ROW
-export const UNIT_CHANNELS = [X, Y, X2, Y2, SIZE, SHAPE, COLOR, ORDER, OPACITY, TEXT, DETAIL];
+export const UNIT_CHANNELS = [X, Y, X2, Y2, SIZE, SHAPE, COLOR, ORDER, OPACITY, TEXT, DETAIL, ANCHOR, OFFSET];
 
 // UNIT_CHANNELS without X2, Y2, ORDER, DETAIL, TEXT
-export const UNIT_SCALE_CHANNELS = [X, Y, SIZE, SHAPE, COLOR, OPACITY];
+export const UNIT_SCALE_CHANNELS = [X, Y, SIZE, SHAPE, COLOR, OPACITY, ANCHOR, OFFSET];
 
 // UNIT_SCALE_CHANNELS with ROW, COLUMN
-export const SCALE_CHANNELS = [X, Y, SIZE, SHAPE, COLOR, OPACITY, ROW, COLUMN];
+export const SCALE_CHANNELS = [X, Y, SIZE, SHAPE, COLOR, OPACITY, ROW, COLUMN, ANCHOR, OFFSET];
 
 // UNIT_CHANNELS without X, Y, X2, Y2;
 export const NONSPATIAL_CHANNELS = [SIZE, SHAPE, COLOR, ORDER, OPACITY, TEXT, DETAIL];
@@ -80,6 +84,7 @@ export interface SupportedMark {
   line?: boolean;
   area?: boolean;
   text?: boolean;
+  label?: boolean;
 };
 
 /**
@@ -122,9 +127,12 @@ export function getSupportedMark(channel: Channel): SupportedMark {
         bar: true, text: true
       };
     case SHAPE:
-      return {point: true};
+      return { point: true };
     case TEXT:
-      return {text: true};
+      return { text: true };
+    case ANCHOR:
+    case OFFSET:
+      return { label: true };
   }
   return {};
 }
@@ -147,6 +155,8 @@ export function getSupportedRole(channel: Channel): SupportedRole {
     case OPACITY:
     case ORDER:
     case DETAIL:
+    case ANCHOR:
+    case OFFSET:
       return {
         measure: true,
         dimension: true

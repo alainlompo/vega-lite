@@ -10,6 +10,7 @@ import {point, circle, square} from './point';
 import {rect} from './rect';
 import {rule} from './rule';
 import {text} from './text';
+import {label} from './label';
 import {tick} from './tick';
 
 import {FacetModel} from '../facet';
@@ -21,6 +22,7 @@ const markCompiler: {[type: string]: MarkCompiler} = {
   line: line,
   point: point,
   text: text,
+  label: text,
   tick: tick,
   rect: rect,
   rule: rule,
