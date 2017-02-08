@@ -8,6 +8,7 @@ import {Facet} from './facet';
 import {Mark} from './mark';
 import {RangeType} from './compile/scale/type';
 import {ScaleType, SCALE_TYPES} from './scale';
+import {contains, toSet, without} from './util';
 
 export namespace Channel {
   // Facet
@@ -52,21 +53,26 @@ export const OFFSET = Channel.OFFSET;
 export const ORDER = Channel.ORDER;
 export const OPACITY = Channel.OPACITY;
 
+export const CHANNELS = [X, Y, X2, Y2, ROW, COLUMN, SIZE, SHAPE, COLOR, ORDER, OPACITY, OFFSET, ANCHOR, TEXT, DETAIL];
 
-export const CHANNELS = [X, Y, X2, Y2, ROW, COLUMN, SIZE, SHAPE, COLOR, ORDER, OPACITY, TEXT, DETAIL, ANCHOR, OFFSET];
+// CHANNELS without COLUMN, ROW
+export const UNIT_CHANNELS = [X, Y, X2, Y2, SIZE, SHAPE, COLOR, ORDER, OPACITY, OFFSET, ANCHOR, TEXT, DETAIL];
 
-export const UNIT_CHANNELS = without(CHANNELS, [ROW, COLUMN] as Channel[]);
+// UNIT_CHANNELS without X2, Y2, ORDER, DETAIL, TEXT
+export const UNIT_SCALE_CHANNELS = [X, Y, SIZE, SHAPE, COLOR, OPACITY];
 
-export const UNIT_SCALE_CHANNELS = without(UNIT_CHANNELS, [X2, Y2, ORDER, DETAIL, TEXT, ANCHOR, OFFSET] as Channel[]);
+// UNIT_SCALE_CHANNELS with ROW, COLUMN
+export const SCALE_CHANNELS = [X, Y, SIZE, SHAPE, COLOR, OPACITY, ROW, COLUMN];
 
-export const SCALE_CHANNELS = union(UNIT_SCALE_CHANNELS, [ROW, COLUMN] as Channel[]);
+// UNIT_CHANNELS without X, Y, X2, Y2;
+// FIXME: does ANCHOR and OFFSET belong here
+export const NONSPATIAL_CHANNELS = [SIZE, SHAPE, COLOR, ORDER, OPACITY, TEXT, DETAIL];
 
-export const NONSPATIAL_CHANNELS = without(UNIT_CHANNELS, [X, Y, X2, Y2, ANCHOR, OFFSET] as Channel[]);
+// UNIT_SCALE_CHANNELS without X, Y;
+export const NONSPATIAL_SCALE_CHANNELS = [SIZE, SHAPE, COLOR, OPACITY];
 
-export const NONSPATIAL_CHANNELS_EXCEPT_ORDER = without(NONSPATIAL_CHANNELS, [ORDER] as Channel[]);
-
-export const NONSPATIAL_SCALE_CHANNELS = without(UNIT_SCALE_CHANNELS, [X, Y] as Channel[]);
-
+/** Channels that can serve as groupings for stacked charts. */
+// FIXME: does ANCHOR and OFFSET belong here
 export const STACK_GROUP_CHANNELS = [COLOR, DETAIL, ORDER, OPACITY, SIZE];
 
 export interface SupportedMark {
@@ -205,7 +211,6 @@ export function supportScaleType(channel: Channel, scaleType: ScaleType): boolea
 }
 
 export function getRangeType(channel: Channel): RangeType {
-
   switch (channel) {
     case X:
     case Y:
@@ -233,5 +238,5 @@ export function getRangeType(channel: Channel): RangeType {
       return undefined;
   }
   /* istanbul ignore next: should never reach here. */
-  throw new Error('getSupportedRole not implemented for ' + channel);
+  throw new Error('getRangeType not implemented for ' + channel);
 }
