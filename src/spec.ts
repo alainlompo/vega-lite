@@ -5,7 +5,7 @@ import {Data} from './data';
 import {EncodingWithFacet, Encoding, channelHasField, isRanged} from './encoding';
 import {Facet} from './facet';
 import {FieldDef} from './fielddef';
-import {Mark, AnyMark, COMPOSITE_MARKS, ERRORBAR, AREA, LINE, POINT, isCompositeMark} from './mark';
+import {Mark, MarkDef, AnyMark, COMPOSITE_MARKS, ERRORBAR, AREA, LINE, POINT, isCompositeMark} from './mark';
 import {stack} from './stack';
 import {Transform} from './transform';
 import {ROW, COLUMN, X, Y, X2, Y2} from './channel';
@@ -77,7 +77,7 @@ export interface GenericUnitSpec<M, E extends Encoding> extends BaseSpec {
   encoding: E;
 }
 
-export type UnitSpec = GenericUnitSpec<Mark, Encoding>;
+export type UnitSpec = GenericUnitSpec<Mark | MarkDef, Encoding>;
 
 export type LayeredUnitSpec = GenericUnitSpec<AnyMark, Encoding>;
 
