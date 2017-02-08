@@ -5,10 +5,17 @@ import {isArray} from './util';
 export interface VgData {
   name: string;
   source?: string;
-  values?: any;
-  format?: any;
-  url?: any;
   transform?: any;
+
+  // InlineData
+  values?: any;
+
+  // URLData
+  url?: any;
+  format?: any;
+
+  // InternalData
+  ref?: string;
 }
 
 export type VgParentRef = {

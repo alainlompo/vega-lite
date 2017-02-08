@@ -1,6 +1,6 @@
-import {NONSPATIAL_CHANNELS, Channel} from '../../channel';
+import {NONSPATIAL_CHANNELS_EXCEPT_ORDER} from '../../channel';
 import {AREA, LINE} from '../../mark';
-import {contains, without} from '../../util';
+import {contains} from '../../util';
 
 import {MarkCompiler} from './base';
 import {area} from './area';
@@ -106,15 +106,16 @@ function parseNonPathMark(model: UnitModel) {
   marks.push({
     name: model.name('marks'),
     type: markCompiler[mark].vgMark,
-    ...(role? {role} : {}),
-    from: {data: dataFrom(model)},
-    encode: { update: markCompiler[mark].encodeEntry(model)}
+    ...(role ? { role } : {}),
+    // refactor for Label
+    from: { data: dataFrom(model) },
+    encode: { update: markCompiler[mark].encodeEntry(model) }
+    ...((model.mark() === LABEL) { ? markCompiler[LABEL].transform(model) : {})
   });
 
   return marks;
 }
 
-const NONSPATIAL_CHANNELS_EXCEPT_ORDER = without(NONSPATIAL_CHANNELS, ['order'] as Channel[]);
 
 /**
  * Returns list of detail (group-by) fields
